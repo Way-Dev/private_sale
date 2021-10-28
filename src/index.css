@@ -1,0 +1,37 @@
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+blockquote, body, dd, dl, figcaption, figure, h1, h2, h3, h4, h5, h6, li, ol, p, ul {
+  font-size: 1rem;
+  margin: 0;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: rgb(0, 0, 0);
+}
+
+body, html {
+  font-family: "joystix","color-emoji";
+  font-size: 16px;
+  color: var(--ink);
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+body, html {
+  background-color: var(--bg);
+  overflow-x: hidden;
+}
+
+body {
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+}
+
+span{
+  font-family: 'SF Pixelate';
+  font-size: 100%;
+  font-weight: bold;
+}
