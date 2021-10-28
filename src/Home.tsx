@@ -39,7 +39,7 @@ const Display = styled.div`
 width: 11rem;
 height: 11rem;
 margin: 0 auto;
-background-image: url('https://zupimages.net/up/21/43/9w16.png');
+background-image: url('https://i.ibb.co/qCdQL3t/ezgif-com-gif-maker.gif');
 image-rendering: pixelated;
 background-size: 100% 100%;
 animation-name: ${Slide};
