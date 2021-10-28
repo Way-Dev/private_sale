@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
@@ -158,7 +158,8 @@ export interface HomeProps {
 const Home = (props: HomeProps) => {
   const [api_url, setUrl] = useState(process.env.REACT_APP_API_URL)
   const [balance, setBalance] = useState<number>();
-  const [isActive, setIsActive] = useState(false); // true when countdown completes
+  const [startDate, setStartDate] = useState(new Date(props.startDate));
+  const isLive = useMemo(() => startDate <= new Date(), [startDate]);
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
   const [isMinting, setIsMinting] = useState(false); // true when user got to press MINT
   const [isWhitelisted, SetWhitelisted] = useState(false);
@@ -173,7 +174,7 @@ const Home = (props: HomeProps) => {
     severity: undefined,
   });
 
-  const [startDate, setStartDate] = useState(new Date(props.startDate));
+
 
   const wallet = useAnchorWallet();
   const [candyMachine, setCandyMachine] = useState<CandyMachine>();
@@ -322,11 +323,11 @@ const Home = (props: HomeProps) => {
        
   <Outer>
 
-      {!wallet ? (
+  {!wallet ? (
         <Wrapper>
           <img src="https://zupimages.net/up/21/43/9w16.png" width="250"/>
           <Title>Mint Solana Koala Business</Title>
-          <ConnectButton>Connect Wallet</ConnectButton>
+          <ConnectButton>🐨 Connect Wallet 🐨</ConnectButton>
         </Wrapper>
       ) : (
         <Wrapper>
@@ -336,23 +337,22 @@ const Home = (props: HomeProps) => {
         <Info><span>Balance:</span> {(balance || 0).toLocaleString()} SOL</Info>
         <Info><span>Minted:</span> {itemsRedeemed} / {itemsAvailable} </Info>
         <MintButton
-          disabled={isSoldOut || isMinting || !isActive}
+          disabled={isSoldOut || isMinting || !isLive}
           onClick={onMint}
           variant="contained"
         >
           {isSoldOut ? (
             "SOLD OUT"
-          ) : isActive ? (
+          ) : isLive ? (
             isMinting ? (
               <CircularProgress />
             ) : (
-              "MINT FOR 1 SOL"
+              "🐨 MINT FOR 1 SOL 🐨"
             )
           ) : (
             <Countdown
               date={startDate}
-              onMount={({ completed }) => completed && setIsActive(true)}
-              onComplete={() => setIsActive(true)}
+              onComplete={() => refreshCandyMachineState()}
               renderer={renderCounter}
             />
           )}
